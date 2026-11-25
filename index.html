@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090909">
+  <meta name="description" content="LUCKY STUDIO MUSIC — rumah bagi karya musik original Lucky Studio Group.">
+  <title>LUCKY STUDIO MUSIC</title>
+  <style>
+    :root{--bg:#090909;--panel:#141414;--panel2:#1b1b1b;--red:#e50920;--white:#f7f7f7;--muted:#a3a3a3;--line:#292929}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif}
+    button{font:inherit}
+    .app{min-height:100vh;padding-bottom:112px}
+    .topbar{height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,5vw,72px);border-bottom:1px solid #202020;background:#0b0b0b;position:sticky;top:0;z-index:5}
+    .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:white}
+    .logo{width:43px;height:43px;border:2px solid var(--red);display:grid;place-items:center;font-weight:900;font-size:17px;letter-spacing:-2px;color:white;position:relative}
+    .logo:after{content:"";position:absolute;width:8px;height:8px;background:var(--red);right:-4px;bottom:-4px}
+    .brand-copy strong{display:block;font-size:14px;letter-spacing:1.6px}
+    .brand-copy small{display:block;font-size:9px;color:#aaa;letter-spacing:2px;margin-top:4px}
+    nav{display:flex;gap:30px}
+    nav a{color:#aaa;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:1.2px}
+    nav a.active,nav a:hover{color:white}
+    nav a.active:after{content:"";display:block;height:2px;background:var(--red);margin-top:8px}
+    .hero{padding:62px clamp(20px,7vw,100px) 48px;background:radial-gradient(ellipse at 85% 20%,rgba(229,9,32,.23),transparent 38%),linear-gradient(115deg,#171717,#090909 65%);position:relative;overflow:hidden}
+    .eyebrow{color:#ff3348;font-size:11px;letter-spacing:3px;font-weight:800}
+    .hero h1{font-size:clamp(34px,6vw,66px);line-height:.98;letter-spacing:-2px;margin:17px 0 15px;max-width:720px}
+    .hero h1 span{color:var(--red)}
+    .hero p{color:#b7b7b7;max-width:530px;line-height:1.7;font-size:14px;margin:0}
+    .hero-mark{position:absolute;right:8%;top:50%;transform:translateY(-50%) rotate(-9deg);font-size:clamp(90px,17vw,210px);font-weight:900;letter-spacing:-18px;color:rgba(255,255,255,.035);pointer-events:none}
+    .content{padding:38px clamp(18px,5vw,72px)}
+    .section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:22px;gap:16px}
+    .section-head h2{font-size:23px;margin:0;letter-spacing:-.5px}
+    .section-head p{margin:7px 0 0;color:var(--muted);font-size:12px}
+    .count{font-size:11px;color:#aaa;letter-spacing:1px}
+    .featured{display:grid;grid-template-columns:1.05fr 1.5fr;gap:24px;margin-bottom:44px}
+    .feature-art{min-height:220px;border-radius:5px;background:linear-gradient(135deg,#3a050b,#d20b25 58%,#090909);display:flex;align-items:end;padding:25px;position:relative;overflow:hidden}
+    .feature-art:before{content:"";position:absolute;width:230px;height:230px;border:1px solid rgba(255,255,255,.22);border-radius:50%;right:-25px;top:-75px;box-shadow:0 0 0 24px rgba(0,0,0,.08),0 0 0 50px rgba(0,0,0,.06)}
+    .feature-art b{font-size:clamp(27px,4vw,45px);line-height:.95;max-width:300px;position:relative;text-transform:uppercase}
+    .feature-info{display:flex;flex-direction:column;justify-content:center}
+    .feature-info .tag{font-size:10px;color:#ff4053;letter-spacing:2px;font-weight:bold}
+    .feature-info h3{font-size:clamp(23px,3vw,34px);margin:12px 0 8px}
+    .feature-info p{color:#aaa;font-size:13px;line-height:1.7;max-width:460px;margin:0 0 20px}
+    .primary{background:var(--red);border:0;border-radius:3px;color:white;padding:12px 21px;font-weight:800;letter-spacing:.6px;cursor:pointer;width:max-content}
+    .primary:hover{background:#ff1c35}
+    .track-list{border-top:1px solid var(--line)}
+    .track{display:grid;grid-template-columns:38px 48px minmax(0,1fr) 95px 44px;align-items:center;gap:14px;padding:10px 12px;border-bottom:1px solid #202020;transition:.18s}
+    .track:hover,.track.playing{background:#191919}
+    .number{color:#777;font-size:13px;text-align:center}
+    .cover{width:48px;height:48px;border-radius:3px;display:grid;place-items:center;font-weight:900;font-size:12px;letter-spacing:-1px;color:white;background:linear-gradient(145deg,#a90019,#171717)}
+    .cover.c2{background:linear-gradient(145deg,#5b0b0b,#d14a2b)}
+    .cover.c3{background:linear-gradient(145deg,#222,#8e1021)}
+    .cover.c4{background:linear-gradient(145deg,#5a090f,#252525)}
+    .cover.c5{background:linear-gradient(145deg,#111,#b10e25)}
+    .cover.c6{background:linear-gradient(145deg,#3d0710,#b33b20)}
+    .track-title{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .track-sub{font-size:11px;color:#888;margin-top:5px}
+    .track-type{font-size:10px;color:#888;text-align:right}
+    .play-small{width:34px;height:34px;border:1px solid #444;border-radius:50%;background:transparent;color:white;cursor:pointer;font-size:13px}
+    .play-small:hover{border-color:var(--red);color:#ff4053}
+    .about{margin-top:46px;padding:27px;border:1px solid #292929;background:linear-gradient(110deg,#151515,#0e0e0e);display:flex;justify-content:space-between;gap:20px;align-items:center}
+    .about h3{margin:0 0 8px;font-size:17px}
+    .about p{margin:0;color:#999;font-size:12px;line-height:1.6;max-width:600px}
+    .about-mark{font-weight:900;font-size:27px;color:var(--red);letter-spacing:-2px;white-space:nowrap}
+    .player{position:fixed;bottom:0;left:0;right:0;z-index:10;background:#101010;border-top:1px solid #333;padding:12px clamp(14px,4vw,55px);display:grid;grid-template-columns:minmax(150px,1fr) minmax(220px,1.5fr) minmax(100px,1fr);gap:20px;align-items:center}
+    .now{display:flex;align-items:center;gap:11px;min-width:0}
+    .now .cover{width:43px;height:43px;flex-shrink:0}
+    .now-title{font-size:12px;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .now-artist{font-size:10px;color:#999;margin-top:4px}
+    .controls{display:flex;align-items:center;justify-content:center;gap:18px}
+    .control{border:0;background:none;color:#ddd;cursor:pointer;font-size:17px}
+    .control.main{width:36px;height:36px;border-radius:50%;background:white;color:#111;font-size:15px}
+    .timeline{display:flex;align-items:center;gap:9px;margin-top:7px}
+    .timeline span{font-size:9px;color:#888;min-width:27px}
+    input[type=range]{width:100%;accent-color:var(--red);cursor:pointer}
+    .volume{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+    .volume input{max-width:95px}
+    .empty{padding:28px;text-align:center;color:#888;font-size:13px}
+    @media(max-width:700px){
+      .topbar{height:66px;padding:0 16px}nav{gap:15px}nav a{font-size:10px}
+      .brand-copy strong{font-size:11px}.brand-copy small{font-size:8px}
+      .hero{padding:48px 22px 40px}.hero-mark{right:-8%;font-size:130px}
+      .featured{grid-template-columns:1fr;gap:16px}.feature-art{min-height:175px}
+      .content{padding:30px 16px}.track{grid-template-columns:22px 42px minmax(0,1fr) 34px;gap:9px;padding:9px 3px}
+      .cover{width:42px;height:42px}.track-type{display:none}
+      .track-title{font-size:12px}.track-sub{font-size:10px}
+      .player{grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:9px 12px}
+      .now .cover{width:38px;height:38px}.controls{gap:13px}
+      .volume{display:none}.player-center{grid-column:1/-1;grid-row:2}
+      .player{padding-bottom:10px}.timeline{margin-top:3px}
+      .about{padding:20px;align-items:flex-start;flex-direction:column}.about-mark{font-size:22px}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="Lucky Studio Music Home">
+      <div class="logo">LSG</div>
+      <div class="brand-copy"><strong>LUCKY STUDIO MUSIC</strong><small>OFFICIAL MUSIC PLATFORM</small></div>
+    </a>
+    <nav><a class="active" href="#home">HOME</a><a href="#music">MUSIC</a><a href="#about">ABOUT</a></nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="eyebrow">A LUCKY STUDIO GROUP COMPANY</div>
+    <h1>SUARA DARI<br><span>SEBUAH KARYA.</span></h1>
+    <p>Tempat berkumpulnya musik original Lucky Studio Group. Dengarkan cerita, pesan, dan karya dalam setiap lagu.</p>
+    <div class="hero-mark">LSG</div>
+  </section>
+
+  <main class="content" id="music">
+    <div class="section-head">
+      <div><h2>Musik pilihan</h2><p>Karya resmi dari LUCKY STUDIO MUSIC</p></div>
+      <div class="count">6 TRACKS</div>
+    </div>
+
+    <section class="featured">
+      <div class="feature-art"><b>Cinta<br>Pertama</b></div>
+      <div class="feature-info">
+        <div class="tag">FEATURED TRACK</div>
+        <h3>Cinta Pertama</h3>
+        <p>Sebuah lagu tentang rasa yang datang untuk pertama kalinya. Putar dan nikmati karya dari LSG Music.</p>
+        <button class="primary" id="featuredPlay">▶ &nbsp; PUTAR LAGU</button>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <div><h2>Semua lagu</h2><p>Pilih lagu dan dengarkan langsung</p></div>
+      <div class="count">LUCKY STUDIO MUSIC</div>
+    </div>
+    <div class="track-list" id="trackList"></div>
+
+    <section class="about" id="about">
+      <div><h3>Tentang LUCKY STUDIO MUSIC</h3><p>LUCKY STUDIO MUSIC merupakan bagian dari Lucky Studio Group yang menghadirkan karya musik original. Satu visi, beragam karya.</p></div>
+      <div class="about-mark">LSG MUSIC</div>
+    </section>
+  </main>
+</div>
+
+<footer class="player">
+  <div class="now">
+    <div class="cover" id="nowCover">LSG</div>
+    <div style="min-width:0"><div class="now-title" id="nowTitle">Pilih lagu untuk diputar</div><div class="now-artist">LUCKY STUDIO MUSIC</div></div>
+  </div>
+  <div class="player-center">
+    <div class="controls">
+      <button class="control" id="prev" aria-label="Lagu sebelumnya">|◀</button>
+      <button class="control main" id="toggle" aria-label="Putar atau jeda">▶</button>
+      <button class="control" id="next" aria-label="Lagu berikutnya">▶|</button>
+    </div>
+    <div class="timeline"><span id="currentTime">0:00</span><input id="seek" type="range" min="0" max="100" value="0"><span id="duration">0:00</span></div>
+  </div>
+  <div class="volume"><span>♫</span><input id="volume" type="range" min="0" max="1" step=".01" value=".8"></div>
+</footer>
+
+<audio id="audio" preload="metadata"></audio>
+<script>
+const tracks = [
+  {title:"Cinta Pertama",file:"assets/cinta-pertama.mp3",cls:"c1",mark:"CP"},
+  {title:"Pahlawan Dalam Hidupku",file:"assets/pahlawan-dalam-hidupku.mp3",cls:"c2",mark:"PD"},
+  {title:"Namamu Hidup",file:"assets/namamu-hidup.mp3",cls:"c3",mark:"NH"},
+  {title:"Satu Visi, Beragam Karya",file:"assets/satu-visi-beragam-karya.mp3",cls:"c4",mark:"SV"},
+  {title:"Untuk Manusia yang Kehilangan",file:"assets/untuk-manusia-yang-kehilangan.mp3",cls:"c5",mark:"UM"},
+  {title:"V-Zearth Chronicles",file:"assets/v-zearth-chronicles.mp3",cls:"c6",mark:"VZ"}
+];
+const audio=document.getElementById("audio");
+const list=document.getElementById("trackList");
+let current=-1;
+const $=id=>document.getElementById(id);
+function time(s){if(!Number.isFinite(s))return "0:00";let m=Math.floor(s/60),sec=Math.floor(s%60);return m+":"+String(sec).padStart(2,"0")}
+function render(){
+  list.innerHTML=tracks.map((t,i)=>`<div class="track" data-index="${i}">
+    <div class="number">${String(i+1).padStart(2,"0")}</div>
+    <div class="cover ${t.cls}">${t.mark}</div>
+    <div><div class="track-title">${t.title}</div><div class="track-sub">LUCKY STUDIO MUSIC</div></div>
+    <div class="track-type">Original</div>
+    <button class="play-small" aria-label="Putar ${t.title}" data-play="${i}">▶</button>
+  </div>`).join("");
+}
+function updateRows(){
+  document.querySelectorAll(".track").forEach((el,i)=>{
+    el.classList.toggle("playing",i===current);
+    const b=el.querySelector("button"); if(b)b.textContent=(i===current&&!audio.paused)?"Ⅱ":"▶";
+  });
+}
+function loadTrack(i,autoplay=true){
+  if(i<0||i>=tracks.length)return;
+  current=i;const t=tracks[i];audio.src=t.file;$("nowTitle").textContent=t.title;
+  $("nowCover").textContent=t.mark;$("nowCover").className="cover "+t.cls;
+  if(autoplay)audio.play().catch(()=>{});
+  $("toggle").textContent=autoplay?"Ⅱ":"▶";updateRows();
+}
+function toggle(){if(current<0){loadTrack(0,true);return}if(audio.paused){audio.play().catch(()=>{});$("toggle").textContent="Ⅱ"}else{audio.pause();$("toggle").textContent="▶"}updateRows()}
+list.addEventListener("click",e=>{const b=e.target.closest("[data-play]");if(b){const i=Number(b.dataset.play);if(i===current){toggle()}else loadTrack(i,true)}});
+$("featuredPlay").addEventListener("click",()=>loadTrack(0,true));
+$("toggle").addEventListener("click",toggle);
+$("prev").addEventListener("click",()=>loadTrack((current<=0?tracks.length-1:current-1),true));
+$("next").addEventListener("click",()=>loadTrack((current+1)%tracks.length,true));
+audio.addEventListener("timeupdate",()=>{$("seek").value=audio.duration?(audio.currentTime/audio.duration)*100:0;$("currentTime").textContent=time(audio.currentTime)});
+audio.addEventListener("loadedmetadata",()=>{$("duration").textContent=time(audio.duration)});
+audio.addEventListener("ended",()=>loadTrack((current+1)%tracks.length,true));
+$("seek").addEventListener("input",e=>{if(audio.duration)audio.currentTime=(Number(e.target.value)/100)*audio.duration});
+$("volume").addEventListener("input",e=>audio.volume=Number(e.target.value));
+audio.volume=.8;render();
+</script>
+</body>
+</html>
